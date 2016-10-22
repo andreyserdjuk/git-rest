@@ -1,6 +1,6 @@
 # git-rest
 
-Provides REST access to Git repositories.  
+Provides REST access to Git functionality.  
 Based on express and simple-git.   
 
 Run application:  
