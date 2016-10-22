@@ -1,19 +1,28 @@
 "use strict";
-const express = require('express');
-let app = express();
-let router = express.Router();
-exports.router = router;
-// var simpleGit = require('simple-git')( workingDirPath );
-// middleware that is specific to this router
-router.use(function timeLog(req, res, next) {
-    console.log('Time: ', Date.now());
-    next();
-});
-// define the home page route
-router.get('/', (req, res) => {
-    res.end('Birds home page\n');
-});
-// define the about route
-router.get('/about', (req, res) => {
-    res.send('About birds\n');
-});
+function setupRouter(router, gitRepo) {
+    // deny non-available repository paths
+    router.use((req, res, next) => {
+        if (typeof req.query.path === 'undefined') {
+            res.end('"path" query parameter is mandatory');
+        }
+        else if (!gitRepo.isAvailable(req.query.path)) {
+            res.end('Repository is not available\n');
+            console.log('Repository "%s" is not available', req.query.path);
+        }
+        else {
+            next();
+        }
+    });
+    // define the home page route
+    router.get('/branches', (req, res) => {
+        gitRepo.getRepo(req.query.path).branch((err, data) => {
+            res.json(data);
+        });
+    });
+    // middleware that is specific to this router
+    router.use(function timeLog(req, res, next) {
+        console.log('Time: ', Date.now(), req.query, req.body);
+        next();
+    });
+}
+exports.setupRouter = setupRouter;
