@@ -1,7 +1,7 @@
 "use strict";
-const sGit = require('simple-git');
+const GitFactory = require('simple-git');
 /**
- * Flyweight factory to prevent creation of sGit.Git instance
+ * Flyweight factory to prevent creation of Git instance
  * when to access to the same repository path.
  */
 class GitRepo {
@@ -10,11 +10,11 @@ class GitRepo {
         this.repositories = new Map();
     }
     /**
-     * @return sGit.Git
+     * @return Git
      */
     getRepo(path) {
         if (!this.repositories.has(path)) {
-            this.repositories.set(path, sGit(path));
+            this.repositories.set(path, GitFactory(path));
         }
         return this.repositories.get(path);
     }

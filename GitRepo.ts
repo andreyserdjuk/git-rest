@@ -1,22 +1,23 @@
-import sGit = require('simple-git');
+import GitFactory = require('simple-git');
+import Git = GitFactory.Git;
 
 /**
- * Flyweight factory to prevent creation of sGit.Git instance
+ * Flyweight factory to prevent creation of Git instance
  * when to access to the same repository path.
  */
 export class GitRepo {
-  protected repositories: Map<string, sGit.Git>;
+  protected repositories: Map<string, Git>;
 
   constructor(protected availablePaths: Set<string>) {
-    this.repositories = new Map<string, sGit.Git>();
+    this.repositories = new Map<string, Git>();
   }
 
   /**
-   * @return sGit.Git
+   * @return Git
    */
   public getRepo(path:string) {
     if (!this.repositories.has(path)) {
-      this.repositories.set(path, sGit(path));
+      this.repositories.set(path, GitFactory(path));
     }
 
     return this.repositories.get(path);
