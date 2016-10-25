@@ -24,7 +24,10 @@ export class GitRepo {
   }
 
   public isAvailable(path: string) {
-    console.log(this.availablePaths);
     return this.availablePaths.has(path);
+  }
+
+  public getAvailablePaths() {
+    return this.availablePaths;
   }
 }

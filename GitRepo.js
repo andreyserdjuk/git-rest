@@ -19,8 +19,10 @@ class GitRepo {
         return this.repositories.get(path);
     }
     isAvailable(path) {
-        console.log(this.availablePaths);
         return this.availablePaths.has(path);
+    }
+    getAvailablePaths() {
+        return this.availablePaths;
     }
 }
 exports.GitRepo = GitRepo;

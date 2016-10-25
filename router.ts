@@ -15,11 +15,13 @@ export function setupRouter(router: Router, gitRepo: GitRepo) {
   });
 
   // define the home page route
-  router.get('/branches', (req, res) => {
+  router.get('/git/branches', (req, res) => {
     gitRepo.getRepo(req.query.path).branch((err, data) => {
       res.json(data);
     });
   });
+
+  router.get('/repositories', (req, res) => res.json([...gitRepo.getAvailablePaths()]));
 
   // middleware that is specific to this router
   router.use(function timeLog(req, res, next) {
