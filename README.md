@@ -1,7 +1,7 @@
 # git-rest
 
 Provides REST access to Git functionality.  
-Based on express and simple-git.   
+Based on [express](https://github.com/expressjs/express) and [simple-git](https://github.com/steveukx/git-js).
 
 Run application:  
 ```bash
