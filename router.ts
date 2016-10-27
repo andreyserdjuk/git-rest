@@ -1,7 +1,7 @@
 import { Router } from 'express-serve-static-core';
-import {GitRepo} from './GitRepo';
+import {ProtectedGitRepo} from './ProtectedGitRepo';
 
-export function setupRouter(router: Router, gitRepo: GitRepo) {
+export function setupRouter(router: Router, gitRepo: ProtectedGitRepo) {
   // deny non-available repository paths
   router.use((req, res, next) => {
     if (typeof req.query.path === 'undefined') {
@@ -21,7 +21,7 @@ export function setupRouter(router: Router, gitRepo: GitRepo) {
     });
   });
 
-  router.get('/repositories', (req, res) => res.json([...gitRepo.getAvailablePaths()]));
+  router.get('/repositories', (req, res) => res.json([...gitRepo.getAvailablePaths().keys()]));
 
   // middleware that is specific to this router
   router.use(function timeLog(req, res, next) {

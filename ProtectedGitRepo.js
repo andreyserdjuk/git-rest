@@ -4,7 +4,7 @@ const GitFactory = require('simple-git');
  * Flyweight factory to prevent creation of Git instance
  * when to access to the same repository path.
  */
-class GitRepo {
+class ProtectedGitRepo {
     constructor(availablePaths) {
         this.availablePaths = availablePaths;
         this.repositories = new Map();
@@ -25,4 +25,4 @@ class GitRepo {
         return this.availablePaths;
     }
 }
-exports.GitRepo = GitRepo;
+exports.ProtectedGitRepo = ProtectedGitRepo;

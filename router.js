@@ -19,7 +19,7 @@ function setupRouter(router, gitRepo) {
             res.json(data);
         });
     });
-    router.get('/repositories', (req, res) => res.json([...gitRepo.getAvailablePaths()]));
+    router.get('/repositories', (req, res) => res.json([...gitRepo.getAvailablePaths().keys()]));
     // middleware that is specific to this router
     router.use(function timeLog(req, res, next) {
         console.log('Time: ', Date.now(), req.query, req.body);

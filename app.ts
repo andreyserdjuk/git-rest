@@ -1,6 +1,6 @@
 import * as process from 'process';
 import * as express from 'express';
-import { GitRepo } from './GitRepo';
+import { ProtectedGitRepo } from './ProtectedGitRepo';
 import { setupRouter } from './router';
 
 /**
@@ -13,7 +13,15 @@ if (typeof GIT_REST_PATH === 'undefined' || GIT_REST_PATH.toString() === '') {
   console.log('Need to set GIT_REST_PATH env variable. For example: GIT_REST_PATH=/path/to/repo1:/path/to/repo2 node app.js')
 } else {
   let app = express();
-  let gitRepo = new GitRepo(new Set<string>(GIT_REST_PATH.split(':')));
+  
+  let pathMap = new Map<string, string>();
+  for(let pathPair in GIT_REST_PATH.split(':')) {
+    let key,value;
+    [key, value] = pathPair.split('='); 
+    pathMap.set(key, value);
+  }
+
+  let gitRepo = new ProtectedGitRepo(pathMap);
   let router = express.Router();
   
   setupRouter(router, gitRepo);

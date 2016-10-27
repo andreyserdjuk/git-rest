@@ -1,7 +1,7 @@
 "use strict";
 const process = require('process');
 const express = require('express');
-const GitRepo_1 = require('./GitRepo');
+const ProtectedGitRepo_1 = require('./ProtectedGitRepo');
 const router_1 = require('./router');
 /**
  * Colon-separated list of available repositories paths.
@@ -13,7 +13,13 @@ if (typeof GIT_REST_PATH === 'undefined' || GIT_REST_PATH.toString() === '') {
 }
 else {
     let app = express();
-    let gitRepo = new GitRepo_1.GitRepo(new Set(GIT_REST_PATH.split(':')));
+    let pathMap = new Map();
+    for (let pathPair in GIT_REST_PATH.split(':')) {
+        let key, value;
+        [key, value] = pathPair.split('=');
+        pathMap.set(key, value);
+    }
+    let gitRepo = new ProtectedGitRepo_1.ProtectedGitRepo(pathMap);
     let router = express.Router();
     router_1.setupRouter(router, gitRepo);
     app.use('/', router);
