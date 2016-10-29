@@ -18,7 +18,6 @@ describe('ProtectedGitRepo', () => {
   });
 
   it('getRepo()', () => {
-    debug;
     let git = repo.getRepo('path1');
     assert.ok(typeof git.branch === 'function');
   });

@@ -1,5 +1,4 @@
 "use strict";
-const util_1 = require('util');
 const assert = require('assert');
 const ProtectedGitRepo_1 = require('./../ProtectedGitRepo');
 describe('ProtectedGitRepo', () => {
@@ -13,7 +12,6 @@ describe('ProtectedGitRepo', () => {
         assert.equal(1, repo.getAvailablePaths().size);
     });
     it('getRepo()', () => {
-        util_1.debug;
         let git = repo.getRepo('path1');
         assert.ok(typeof git.branch === 'function');
     });
