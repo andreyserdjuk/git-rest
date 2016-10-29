@@ -14,7 +14,7 @@ if (typeof GIT_REST_PATH === 'undefined' || GIT_REST_PATH.toString() === '') {
 else {
     let app = express();
     let pathMap = new Map();
-    for (let pathPair in GIT_REST_PATH.split(':')) {
+    for (let pathPair of GIT_REST_PATH.split(':')) {
         let key, value;
         [key, value] = pathPair.split('=');
         pathMap.set(key, value);

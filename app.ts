@@ -15,12 +15,12 @@ if (typeof GIT_REST_PATH === 'undefined' || GIT_REST_PATH.toString() === '') {
   let app = express();
   
   let pathMap = new Map<string, string>();
-  for(let pathPair in GIT_REST_PATH.split(':')) {
+  for(let pathPair of GIT_REST_PATH.split(':')) {
     let key,value;
     [key, value] = pathPair.split('='); 
     pathMap.set(key, value);
   }
-
+  
   let gitRepo = new ProtectedGitRepo(pathMap);
   let router = express.Router();
   

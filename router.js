@@ -2,19 +2,19 @@
 function setupRouter(router, gitRepo) {
     // deny non-available repository paths
     router.use((req, res, next) => {
-        if (typeof req.query.path === 'undefined') {
-            res.end('"path" query parameter is mandatory');
+        if (req.path.match(/^\/git/)) {
+            if (typeof req.query.path === 'undefined') {
+                res.end('"path" query parameter is mandatory');
+            }
+            else if (!gitRepo.isAvailable(req.query.path)) {
+                res.end('Repository is not available\n');
+                console.log('Repository "%s" is not available', req.query.path);
+            }
         }
-        else if (!gitRepo.isAvailable(req.query.path)) {
-            res.end('Repository is not available\n');
-            console.log('Repository "%s" is not available', req.query.path);
-        }
-        else {
-            next();
-        }
+        next();
     });
     // define the home page route
-    router.get('/git/branches', (req, res) => {
+    router.get('/git/branch', (req, res) => {
         gitRepo.getRepo(req.query.path).branch((err, data) => {
             res.json(data);
         });
