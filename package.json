@@ -16,6 +16,7 @@
   "license": "ISC",
   "scripts": {
     "test": "node ./node_modules/mocha/bin/mocha --reporter spec",
+    "debug": "node --inspect --debug-brk ./node_modules/mocha/bin/mocha --reporter spec",
     "start": "node ./app.js"
   },
   "dependencies": {
