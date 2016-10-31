@@ -1,5 +1,7 @@
+import { debug } from 'util';
 import GitFactory = require('simple-git');
 import Git = GitFactory.Git;
+import fs =  require('fs');
 
 /**
  * Flyweight factory to prevent creation of Git instance
@@ -15,8 +17,18 @@ export class ProtectedGitRepo {
   /**
    * @return Git
    */
-  public getRepo(path:string) {
+  public getRepo(keyPath:string) {
+    let path = this.availablePaths.get(keyPath);
+
+    if (typeof path === 'undefined') {
+      throw new Error('There are no such path registered in API: ' + keyPath);
+    }
+
     if (!this.repositories.has(path)) {
+      if (!fs.existsSync(path)) {
+        throw new Error('Cannot locate path in filesystem: ' + path);
+      }
+
       this.repositories.set(path, GitFactory(path));
     }
 

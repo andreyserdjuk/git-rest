@@ -27,6 +27,11 @@ if (typeof GIT_REST_PATH === 'undefined' || GIT_REST_PATH.toString() === '') {
   setupRouter(router, gitRepo);
   app.use('/', router);
 
+  app.use((err, req, res, next) => {
+    console.error(err);
+    res.json({message: err.message, data: []});
+  });
+
   const port = process.env.PORT || 3000;
   app.listen(port, function () {
     console.log('Example app listening on port %d!', port);

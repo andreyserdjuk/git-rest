@@ -1,3 +1,4 @@
+import { debug } from 'util';
 import { Router } from 'express-serve-static-core';
 import {ProtectedGitRepo} from './ProtectedGitRepo';
 
@@ -19,11 +20,14 @@ export function setupRouter(router: Router, gitRepo: ProtectedGitRepo) {
   // define the home page route
   router.get('/git/branch', (req, res) => {
     gitRepo.getRepo(req.query.path).branch((err, data) => {
-      res.json(data);
+      res.json({message: '', data: data});
     });
   });
 
-  router.get('/repositories', (req, res) => res.json([...gitRepo.getAvailablePaths().keys()]));
+  // show all registered repositories paths when application loaded
+  router.get('/repositories', (req, res) =>
+    res.json({message: '', data: [...gitRepo.getAvailablePaths().keys()]})
+  );
 
   // middleware that is specific to this router
   router.use(function timeLog(req, res, next) {
