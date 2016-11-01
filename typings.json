@@ -1,6 +1,9 @@
 {
-  "dependencies": {},
+  "dependencies": {
+    "simple-git": "registry:npm/simple-git#1.47.0+20161004004911"
+  },
   "globalDependencies": {
+    "express": "registry:dt/express#4.0.0+20160708185218",
     "node": "registry:dt/node#6.0.0+20161014191813"
   }
 }
