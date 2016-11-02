@@ -21,12 +21,12 @@ export class ProtectedGitRepo {
     let path = this.availablePaths.get(keyPath);
 
     if (typeof path === 'undefined') {
-      throw new Error('There are no such path registered in API: ' + keyPath);
+      throw new Error(`There are no such path registered in API: "${keyPath}"`);
     }
 
     if (!this.repositories.has(path)) {
       if (!fs.existsSync(path)) {
-        throw new Error('Cannot locate path in filesystem: ' + path);
+        throw new Error(`Cannot locate path in filesystem: "${path}"`);
       }
 
       this.repositories.set(path, GitFactory(path));
