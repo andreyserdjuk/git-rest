@@ -1,6 +1,6 @@
 "use strict";
-const GitFactory = require('simple-git');
-const fs = require('fs');
+Object.defineProperty(exports, "__esModule", { value: true });
+const GitFactory = require("simple-git");
 /**
  * Flyweight factory to prevent creation of Git instance
  * when to access to the same repository path.
@@ -14,14 +14,11 @@ class ProtectedGitRepo {
      * @return Git
      */
     getRepo(keyPath) {
-        let path = this.availablePaths.get(keyPath);
-        if (typeof path === 'undefined') {
+        if (!this.isAvailable(keyPath)) {
             throw new Error(`There are no such path registered in API: "${keyPath}"`);
         }
+        let path = this.availablePaths.get(keyPath);
         if (!this.repositories.has(path)) {
-            if (!fs.existsSync(path)) {
-                throw new Error(`Cannot locate path in filesystem: "${path}"`);
-            }
             this.repositories.set(path, GitFactory(path));
         }
         return this.repositories.get(path);
@@ -34,3 +31,4 @@ class ProtectedGitRepo {
     }
 }
 exports.ProtectedGitRepo = ProtectedGitRepo;
+//# sourceMappingURL=ProtectedGitRepo.js.map

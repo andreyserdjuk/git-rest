@@ -1,14 +1,17 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function setupRouter(router, gitRepo) {
     // deny non-available repository paths
     router.use((req, res, next) => {
         if (req.path.match(/^\/git/)) {
             if (typeof req.query.path === 'undefined') {
                 res.end('"path" query parameter is mandatory');
+                return;
             }
             else if (!gitRepo.isAvailable(req.query.path)) {
-                res.end('Repository is not available\n');
+                res.json({ message: 'Repository is not available', data: [] });
                 console.log('Repository "%s" is not available', req.query.path);
+                return;
             }
         }
         next();
@@ -28,3 +31,4 @@ function setupRouter(router, gitRepo) {
     });
 }
 exports.setupRouter = setupRouter;
+//# sourceMappingURL=router.js.map

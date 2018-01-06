@@ -1,6 +1,7 @@
 "use strict";
-const assert = require('assert');
-const ProtectedGitRepo_1 = require('./../ProtectedGitRepo');
+Object.defineProperty(exports, "__esModule", { value: true });
+const assert = require("assert");
+const ProtectedGitRepo_1 = require("./../ProtectedGitRepo");
 describe('ProtectedGitRepo', () => {
     let availablePaths = new Map();
     availablePaths.set('path1', 'path/to/path1');
@@ -16,3 +17,4 @@ describe('ProtectedGitRepo', () => {
         assert.ok(typeof git.branch === 'function');
     });
 });
+//# sourceMappingURL=ProtectedGitRepo.js.map

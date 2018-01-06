@@ -18,17 +18,12 @@ export class ProtectedGitRepo {
    * @return Git
    */
   public getRepo(keyPath:string) {
-    let path = this.availablePaths.get(keyPath);
-
-    if (typeof path === 'undefined') {
+    if (!this.isAvailable(keyPath)) {
       throw new Error(`There are no such path registered in API: "${keyPath}"`);
     }
 
+    let path = this.availablePaths.get(keyPath);
     if (!this.repositories.has(path)) {
-      if (!fs.existsSync(path)) {
-        throw new Error(`Cannot locate path in filesystem: "${path}"`);
-      }
-
       this.repositories.set(path, GitFactory(path));
     }
 
@@ -39,7 +34,7 @@ export class ProtectedGitRepo {
     return this.availablePaths.has(path);
   }
 
-  public getAvailablePaths() {
+  public getAvailablePaths(): Map<string, string> {
     return this.availablePaths;
   }
 }
